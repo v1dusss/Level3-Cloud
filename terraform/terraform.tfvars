@@ -1,0 +1,6 @@
+auth_url            = "http://<server_ip>/identity/v3"
+username            = ""
+password            = ""
+project_name        = ""
+region              = "RegionOne"
+external_network_id = ""
