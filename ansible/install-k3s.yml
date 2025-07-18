@@ -1,0 +1,28 @@
+- name: Install K3s server
+  hosts: master
+  become: true
+  tasks:
+    - name: Download and install K3s
+      shell: curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644
+      args:
+        creates: /usr/local/bin/k3s
+
+    - name: Get the K3s node token
+      command: cat /var/lib/rancher/k3s/server/node-token
+      register: k3s_token
+
+    - name: Save the join token
+      set_fact:
+        join_token: "{{ k3s_token.stdout }}"
+
+- name: Install K3s agents
+  hosts: workers
+  become: true
+  vars:
+    k3s_server_ip: "{{ hostvars[groups['master'][0]].ansible_host }}"
+  tasks:
+    - name: Join worker to K3s server
+      shell: |
+        curl -sfL https://get.k3s.io | K3S_URL="https://{{ k3s_server_ip }}:6443" K3S_TOKEN="{{ hostvars['master1']['join_token'] }}" sh -
+      args:
+        creates: /usr/local/bin/k3s-agent
