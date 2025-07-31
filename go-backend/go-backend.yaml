@@ -18,7 +18,7 @@ spec:
         - name: regcred
       containers:
       - name: go-backend
-        image: v1dusss/go-backend:v1.0.4
+        image: v1dusss/go-backend:latest
         ports:
         - containerPort: 8080
         imagePullPolicy: IfNotPresent

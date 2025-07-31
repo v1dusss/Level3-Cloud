@@ -29,7 +29,7 @@ func main() {
 	}
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "v1dusss/go-backend:v1.0.4\n")
+		fmt.Fprintf(w, "v1dusss/go-backend:v1.0.6\n")
 	})
 
 	http.HandleFunc("/pods", func(w http.ResponseWriter, r *http.Request) {
