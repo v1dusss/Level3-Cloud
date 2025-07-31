@@ -7,7 +7,7 @@ echo "stack ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/stack
 
 # 2. Create devstack directory and local.conf
 sudo mkdir -p /opt/stack/devstack
-sudo curl -o /opt/stack/devstack/local.conf https://docs.openstack.org/devstack/latest/_downloads/d6fbba8d6ab5e970a86dd2ca0b884098/local.conf
+sudo curl -o /opt/stack/local.conf https://docs.openstack.org/devstack/latest/_downloads/d6fbba8d6ab5e970a86dd2ca0b884098/local.conf
 sudo chown -R stack:stack /opt/stack/devstack
 
 # 3. Copy script into stack's home for continuation

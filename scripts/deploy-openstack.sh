@@ -4,6 +4,7 @@ set -e
 # Assumes local.conf already exists
 cd /opt/stack
 git clone https://opendev.org/openstack/devstack || true
+mv local.conf devstack/local.conf
 cd devstack
 
 ./stack.sh
