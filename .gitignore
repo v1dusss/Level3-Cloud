@@ -1,5 +1,50 @@
 /.idea
 
+# Go-backend specific ignores
+# Binaries for programs and plugins
+go-backend/myapp
+go-backend/*.exe
+go-backend/*.exe~
+go-backend/*.dll
+go-backend/*.so
+go-backend/*.dylib
+
+# Test binary, built with `go test -c`
+go-backend/*.test
+
+# Output of the go coverage tool
+go-backend/*.out
+
+# Dependency directories (Go modules)
+go-backend/vendor/
+
+# Go workspace file
+go-backend/go.work
+
+# IDE and editor files
+go-backend/.vscode/
+go-backend/.idea/
+go-backend/*.swp
+go-backend/*.swo
+go-backend/*~
+
+# OS generated files
+go-backend/.DS_Store
+go-backend/.DS_Store?
+go-backend/._*
+go-backend/.Spotlight-V100
+go-backend/.Trashes
+go-backend/ehthumbs.db
+go-backend/Thumbs.db
+
+# Local environment files
+go-backend/.env
+go-backend/.env.local
+go-backend/.env.*.local
+
+# Build artifacts
+go-backend/dist/
+go-backend/build/
 
 # Local .terraform directories
 .terraform/
