@@ -65,3 +65,9 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 terraform apply -auto-approve
+
+mkdir ~/.ssh
+mv k3s-key.pem ~/.ssh/id_rsa.pem
+chmod 600 ~/.ssh/id_rsa.pem
+
+echo -e "\e[32m[+] SSH key moved to ~/.ssh/id_rsa.pem\e[0m"

@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-INVENTORY_PATH="./ansible/inventory_local.ini"
-PLAYBOOK_PATH="./ansible/install-k3s.yml"
+INVENTORY_PATH="/opt/stack/Level3-Cloud/ansible/inventory_local.ini"
+PLAYBOOK_PATH="/opt/stack/Level3-Cloud/ansible/install-k3s.yml"
 SSH_KEY="~/.ssh/id_rsa.pem"
 ANSIBLE_USER="ubuntu"
 
@@ -57,4 +57,5 @@ if [ ! -f "$PLAYBOOK_PATH" ]; then
 fi
 
 echo -e "\n[+] Running Ansible playbook: $PLAYBOOK_PATH"
-ansible-playbook -i "$INVENTORY_PATH" "$PLAYBOOK_PATH"
+cd ansible
+ansible-playbook "$PLAYBOOK_PATH"
