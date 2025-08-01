@@ -7,12 +7,12 @@ output "worker_floating_ips" {
 }
 
 output "private_key" {
-  value     = tls_private_key.k8s_key.private_key_pem
+  value     = tls_private_key.k3s_key.private_key_pem
   sensitive = true
 }
 
 resource "local_file" "private_key_file" {
-  content         = tls_private_key.k8s_key.private_key_pem
-  filename        = "${path.module}/k8s-key.pem"
+  content         = tls_private_key.k3s_key.private_key_pem
+  filename        = "${path.module}/k3s-key.pem"
   file_permission = "0600"
 }

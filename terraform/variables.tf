@@ -7,8 +7,11 @@ variable "region" {}
 variable "image" {
   default = "Ubuntu 22.04 Jammy"
 }
-variable "flavor" {
-  default = "ds1G"
+variable "worker_flavor" {
+  default = "k3s_flavor"
+}
+variable "master_flavor" {
+  default = "k3s_flavor"
 }
 variable "keypair" {
   default = "mykey"
