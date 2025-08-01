@@ -18,10 +18,10 @@ echo "[+] Generating dynamic Ansible inventory..."
 # --- Master ---
 echo "[master]" > "$INVENTORY_PATH"
 MASTER_NAME="k3s-master"
-MASTER_IP=$(get_floating_ip "$MASTER_NAME")
+MASTER_IP=$(get_fixed_ip "$MASTER_NAME")
 
 if [ -z "$MASTER_IP" ]; then
-    echo -e "\e[31mERROR: Could not find floating IP for master: $MASTER_NAME\e[0m"
+    echo -e "\e[31mERROR: Could not find fixed IP for master: $MASTER_NAME\e[0m"
     exit 1
 fi
 
@@ -38,12 +38,12 @@ if [ -z "$WORKER_NAMES" ]; then
 else
     COUNT=1
     while read -r WORKER; do
-        IP=$(get_floating_ip "$WORKER")
+        IP=$(get_fixed_ip "$WORKER")
         if [ -n "$IP" ]; then
             echo "worker${COUNT} ansible_host=$IP ansible_user=$ANSIBLE_USER ansible_ssh_private_key_file=$SSH_KEY" >> "$INVENTORY_PATH"
             COUNT=$((COUNT + 1))
         else
-            echo -e "\e[33mWARNING: No floating IP found for $WORKER\e[0m"
+            echo -e "\e[33mWARNING: No fixed IP found for $WORKER\e[0m"
         fi
     done <<< "$WORKER_NAMES"
 fi
