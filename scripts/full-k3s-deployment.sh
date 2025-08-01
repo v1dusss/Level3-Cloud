@@ -7,11 +7,10 @@ SSH_KEY="~/.ssh/id_rsa.pem"
 ANSIBLE_USER="ubuntu"
 
 # Extract floating IP (public) from a given server name
-get_floating_ip() {
+get_fixed_ip() {
     local server_name=$1
     openstack server show "$server_name" -f value -c addresses \
-        | grep -oP '\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b' \
-        | grep -v '^172\.24\.4\.' | head -n1
+        | grep -oP '\b172\.24\.\d+\.\d+\b' | head -n1
 }
 
 echo "[+] Generating dynamic Ansible inventory..."
