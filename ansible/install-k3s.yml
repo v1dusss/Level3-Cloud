@@ -7,9 +7,16 @@
       args:
         creates: /usr/local/bin/k3s
 
+    - name: Wait for K3s to finish initializing
+      ansible.builtin.pause:
+        seconds: 30
+
     - name: Get the K3s node token
       command: cat /var/lib/rancher/k3s/server/node-token
       register: k3s_token
+      retries: 5
+      delay: 10
+      until: k3s_token.stdout != ""
 
     - name: Save the join token
       set_fact:
@@ -26,3 +33,41 @@
         curl -sfL https://get.k3s.io | K3S_URL="https://{{ k3s_server_ip }}:6443" K3S_TOKEN="{{ hostvars['master1']['join_token'] }}" sh -
       args:
         creates: /usr/local/bin/k3s-agent
+
+- name: Install Postgres Operator on Master
+  hosts: master
+  become: true
+  vars:
+    namespace: postgres-operator
+    repo_url: https://github.com/CrunchyData/postgres-operator-examples.git
+    repo_dir: /opt/postgres-operator-examples
+  tasks:
+
+    - name: Ensure kubectl is available
+      command: which kubectl
+      register: kubectl_check
+      failed_when: kubectl_check.rc != 0
+
+    - name: Clone CrunchyData Postgres Operator examples
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ repo_dir }}"
+        version: HEAD
+
+    - name: Apply Namespace
+      command: kubectl apply -k kustomize/install/namespace
+      args:
+        chdir: "{{ repo_dir }}"
+
+    - name: Apply Operator Installation
+      command: kubectl apply --server-side -k kustomize/install/default
+      args:
+        chdir: "{{ repo_dir }}"
+
+    - name: Wait for Postgres Operator pod to be ready
+      shell: |
+        kubectl get pod -n {{ namespace }} -l postgres-operator.crunchydata.com/control-plane=postgres-operator -o jsonpath="{.items[0].status.containerStatuses[0].ready}"
+      register: wait_result
+      retries: 12
+      delay: 10
+      until: wait_result.stdout == "true"
