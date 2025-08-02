@@ -2,11 +2,6 @@
   hosts: master
   become: true
   tasks:
-    - name: Wait 360 seconds, but only start checking after 120 seconds
-      ansible.builtin.wait_for_connection:
-        delay: 120
-        timeout: 360
-
     - name: Download and install K3s
       shell: curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644
       args:

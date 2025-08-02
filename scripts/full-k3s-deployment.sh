@@ -57,6 +57,9 @@ if [ ! -f "$PLAYBOOK_PATH" ]; then
     exit 1
 fi
 
+echo -e "\e[33m[~] Waiting 120 seconds for instances to finish booting...\e[0m"
+sleep 120
+
 echo -e "\n[+] Running Ansible playbook: $PLAYBOOK_PATH"
 cd "$ANSIBLE_DIR"
 ansible-playbook "$PLAYBOOK_PATH"
