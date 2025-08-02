@@ -67,7 +67,6 @@ fi
 terraform apply -auto-approve
 
 mkdir ~/.ssh
-rm ~/.ssh/*
 mv k3s-key.pem ~/.ssh/id_rsa.pem
 chmod 600 ~/.ssh/id_rsa.pem
 
