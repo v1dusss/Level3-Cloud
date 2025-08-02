@@ -17,7 +17,7 @@ openstack image create "Ubuntu 22.04 Jammy" \
    --disk-format qcow2 \
    --container-format bare
 
-openstack flavor create k3s_flavor --ram 24576 --disk 60 --vcpus 8 --public
+openstack flavor create k3s_flavor --ram 10240 --disk 60 --vcpus 4 --public
 
 cd /opt/stack
 git clone https://github.com/v1dusss/Level3-Cloud.git Level3-Cloud
@@ -67,6 +67,7 @@ fi
 terraform apply -auto-approve
 
 mkdir ~/.ssh
+rm ~/.ssh/*
 mv k3s-key.pem ~/.ssh/id_rsa.pem
 chmod 600 ~/.ssh/id_rsa.pem
 
