@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
 
-INVENTORY_PATH="/opt/stack/Level3-Cloud/ansible/inventory_local.ini"
-PLAYBOOK_PATH="/opt/stack/Level3-Cloud/ansible/install-k3s.yml"
+ANSIBLE_DIR="/opt/stack/Level3-Cloud/ansible"
+INVENTORY_PATH="$ANSIBLE_DIR/inventory_local.ini"
+PLAYBOOK_PATH="$ANSIBLE_DIR/install-k3s.yml"
 SSH_KEY="~/.ssh/id_rsa.pem"
 ANSIBLE_USER="ubuntu"
 
@@ -57,5 +58,10 @@ if [ ! -f "$PLAYBOOK_PATH" ]; then
 fi
 
 echo -e "\n[+] Running Ansible playbook: $PLAYBOOK_PATH"
-cd ansible
+cd "$ANSIBLE_DIR"
 ansible-playbook "$PLAYBOOK_PATH"
+if [ $? -ne 0 ]; then
+    echo -e "\e[31mERROR: Ansible playbook execution failed\e[0m"
+    exit 1
+fi
+echo -e "\e[32m[+] K3s installation completed successfully!\e[0m"

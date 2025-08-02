@@ -71,3 +71,8 @@ mv k3s-key.pem ~/.ssh/id_rsa.pem
 chmod 600 ~/.ssh/id_rsa.pem
 
 echo -e "\e[32m[+] SSH key moved to ~/.ssh/id_rsa.pem\e[0m"
+
+# Make full-k3s-deployment.sh executable and run it
+chmod +x /opt/stack/Level3-Cloud/scripts/full-k3s-deployment.sh
+echo -e "\e[32m[+] Running full-k3s-deployment.sh\e[0m"
+/opt/stack/Level3-Cloud/scripts/full-k3s-deployment.sh
