@@ -2,8 +2,10 @@
   hosts: master
   become: true
   tasks:
-    - name: Download and install K3s
-      shell: curl -sfL https://get.k3s.io | sh -s - --write-kubeconfig-mode 644
+    - name: Download and install K3s with TLS SAN
+      shell: |
+        curl -sfL https://get.k3s.io | \
+        sh -s - --write-kubeconfig-mode 644 --tls-san {{ ansible_host }}
       args:
         creates: /usr/local/bin/k3s
 
@@ -30,7 +32,9 @@
   tasks:
     - name: Join worker to K3s server
       shell: |
-        curl -sfL https://get.k3s.io | K3S_URL="https://{{ k3s_server_ip }}:6443" K3S_TOKEN="{{ hostvars['master1']['join_token'] }}" sh -
+        curl -sfL https://get.k3s.io | \
+        K3S_URL="https://{{ k3s_server_ip }}:6443" \
+        K3S_TOKEN="{{ hostvars['master1']['join_token'] }}" sh -
       args:
         creates: /usr/local/bin/k3s-agent
 
