@@ -23,4 +23,11 @@ echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://
 sudo apt-get update && sudo apt-get install -y terraform
 echo "Terraform installed: $(terraform -version | head -n 1)"
 
+# 5. Install Ansible
+echo "Installing Ansible..."
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+sudo apt-get install -y ansible
+echo "Ansible installed: $(ansible --version | head -n 1)"
+
 exit 0
